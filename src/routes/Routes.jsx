@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     element: <Main />,
     children: [
       {
-        index: true,
+        path: "/",
         element: <SlipIssueQueue />,
       },
       {
@@ -37,23 +37,23 @@ const router = createBrowserRouter([
         element: <Members />,
       },
       {
-        path: "/users",
+        path: "users",
         element: <Users />,
       },
       {
-        path: "/slip-issue",
+        path: "slip-issue",
         element: <SlipIssue />,
       },
       {
-        path: "/slip-issue-queue",
+        path: "slip-issue-queue",
         element: <SlipIssueQueue />,
       },
       {
-        path: "/settings",
+        path: "settings",
         element: <Settings />,
       },
       {
-        path: "/profile",
+        path: "profile",
         element: <Profile />,
       },
     ],
