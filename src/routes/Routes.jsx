@@ -9,20 +9,40 @@ import Settings from "../pages/Settings/Settings";
 import SlipIssue from "../pages/SlipIssue/SlipIssue";
 import SlipIssueQueue from "../pages/SlipIssueQueue/SlipIssueQueue";
 import Users from "../pages/Users/Users";
+import AdminRoute from "./AdminRoute";
+import OperatorRoute from "./OperatorRoute";
+import PrivateRoute from "./PrivateRoute";
+import ViewerRoute from "./ViewerRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Main />,
+    element: (
+      <PrivateRoute>
+        <Main />
+      </PrivateRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
-        element: <SlipIssueQueue />,
+        element: (
+          <PrivateRoute>
+            <ViewerRoute>
+              <SlipIssueQueue />
+            </ViewerRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/slip-issue",
-        element: <SlipIssue />,
+        element: (
+          <PrivateRoute>
+            <OperatorRoute>
+              <SlipIssue />
+            </OperatorRoute>
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -32,31 +52,73 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: (
+      <PrivateRoute>
+        <AdminRoute>
+          <Dashboard />
+        </AdminRoute>
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
-        element: <Members />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <Members />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "users",
-        element: <Users />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <Users />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "slip-issue",
-        element: <SlipIssue />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <SlipIssue />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "slip-issue-queue",
-        element: <SlipIssueQueue />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <SlipIssueQueue />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "settings",
-        element: <Settings />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <Settings />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
       {
         path: "profile",
-        element: <Profile />,
+        element: (
+          <PrivateRoute>
+            <AdminRoute>
+              <Profile />
+            </AdminRoute>
+          </PrivateRoute>
+        ),
       },
     ],
   },
