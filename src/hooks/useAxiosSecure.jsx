@@ -9,7 +9,7 @@ export const axiosSecure = axios.create({
 });
 
 const useAxiosSecure = () => {
-  const { logoutUser } = useAuth();
+  const { authClear } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,13 +17,13 @@ const useAxiosSecure = () => {
       (res) => res,
       async (err) => {
         if (err.response.status === 401 || err.response.status === 403) {
-          await logoutUser();
+          authClear();
           navigate("/login");
         }
         return Promise.reject(err);
       }
     );
-  }, [logoutUser, navigate]);
+  }, [authClear, navigate]);
 
   return axiosSecure;
 };
