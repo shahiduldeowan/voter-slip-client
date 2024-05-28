@@ -1,12 +1,12 @@
 import { LiaSpinnerSolid } from "react-icons/lia";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import bgRmDeSoftLogo from "../../assets/images/bg-rm-logo.png";
 import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location?.state;
+  // const location = useLocation();
+  // const from = location?.state;
   const { loginUser, isLoading } = useAuth();
 
   const handleSubmit = (e) => {
@@ -15,20 +15,37 @@ const Login = () => {
     const Username = formData.get("username");
     const Password = formData.get("password");
     const user = { Username, Password };
+
     loginUser(user)
       .then((user) => {
         if (user?.RoleName === "Admin" || user?.RoleName === "Supervisor") {
-          const to = from || "/dashboard";
-          navigate(to);
+          navigate("/dashboard", { replace: true });
         } else if (user?.RoleName === "Operator") {
-          const to = from || "/slip-issue";
-          navigate(to);
+          navigate("/slip-issue", { replace: true });
         } else if (user?.RoleName === "Viewer") {
-          const to = from || "/";
-          navigate(to);
+          navigate("/", { replace: true });
         }
       })
-      .catch(() => {});
+      .catch(() => {
+        // handle error
+      });
+    // loginUser(user)
+    //   .then((user) => {
+    //     if (user?.RoleName === "Admin" || user?.RoleName === "Supervisor") {
+    //       const to = from || "/dashboard";
+    //       console.log(1, to);
+    //       navigate(to);
+    //     } else if (user?.RoleName === "Operator") {
+    //       const to = from || "/slip-issue";
+    //       console.log(2, to);
+    //       navigate(to);
+    //     } else if (user?.RoleName === "Viewer") {
+    //       const to = from || "/";
+    //       console.log(3, to);
+    //       navigate(to);
+    //     }
+    //   })
+    //   .catch(() => {});
   };
 
   return (
