@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/slip-issue",
+        path: "slip-issue",
         element: (
           <PrivateRoute>
             <OperatorRoute>
@@ -47,11 +47,11 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
+    path: "login",
     element: <Login />,
   },
   {
-    path: "/dashboard",
+    path: "dashboard",
     element: (
       <PrivateRoute>
         <AdminRoute>
