@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+
 import { Navigate } from "react-router-dom";
 import LoadingSpinner from "../components/Shared/LoadingSpinner";
 import useAuth from "../hooks/useAuth";

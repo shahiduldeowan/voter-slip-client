@@ -1,13 +1,14 @@
 import axios from "axios";
 import PropTypes from "prop-types";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { API_ENDPOINT } from "../config/api";
 
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isLogoutLoading, setIsLogoutLoading] = useState(false);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
 
@@ -31,6 +32,7 @@ const AuthProvider = ({ children }) => {
       }
 
       toast.success(result?.message || "Login Successful");
+
       setError(null);
       setUser(result?.data);
       setIsLoading(false);
@@ -44,8 +46,14 @@ const AuthProvider = ({ children }) => {
     }
   };
 
+  const authClear = () => {
+    setUser(null);
+    setError(null);
+    setIsLoading(false);
+  };
+
   const logoutUser = async () => {
-    setIsLoading(true);
+    setIsLogoutLoading(true);
     try {
       await axios.get(
         `${import.meta.env.VITE_API_BASE_URL}${API_ENDPOINT.USER_LOGOUT}`,
@@ -58,10 +66,45 @@ const AuthProvider = ({ children }) => {
       //
     }
 
-    setIsLoading(false);
+    setIsLogoutLoading(false);
   };
 
-  const authInfo = { isLoading, error, user, loginUser, logoutUser };
+  useEffect(() => {
+    const checkAuthUser = async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}${API_ENDPOINT.AUTH_STATUS}`,
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        const result = await res.json();
+        const myUser = result.data;
+        if (myUser?.UserID) {
+          setUser(myUser);
+        } else {
+          setUser(null);
+        }
+      } catch (error) {
+        setUser(null);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuthUser();
+  }, []);
+
+  const authInfo = {
+    isLoading,
+    isLogoutLoading,
+    error,
+    user,
+    loginUser,
+    logoutUser,
+    authClear,
+  };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );
