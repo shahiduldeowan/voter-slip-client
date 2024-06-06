@@ -42,7 +42,8 @@ const SlipIssue = () => {
     });
   };
 
-  const isDataShow = voter?.SlipStatus === SLIP_STATUS.PENDING;
+  // const isDataShow = voter?.SlipStatus === SLIP_STATUS.PENDING;
+  const isDataShow = true;
 
   return (
     <div className="h-[100%] w-[100%]">

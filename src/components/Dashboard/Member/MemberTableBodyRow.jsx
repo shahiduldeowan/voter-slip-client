@@ -43,15 +43,9 @@ const MemberTableBodyRow = ({ member, refetch }) => {
 
   return (
     <tr>
-      <th>
-        <label>
-          <input type="checkbox" className="checkbox" />
-        </label>
-      </th>
-      <td>{member?.SerialNumber || "N/A"}</td>
-
-      <td>
-        <div className="flex items-center gap-3">
+      <td className="p-3">{member?.SerialNumber || "N/A"}</td>
+      <td className="p-3 w-96">
+        <div className="flex  items-center gap-3">
           <div className="avatar">
             <div className="mask mask-squircle w-12 h-12">
               <img
@@ -60,7 +54,7 @@ const MemberTableBodyRow = ({ member, refetch }) => {
               />
             </div>
           </div>
-          <div>
+          <div className="flex-1">
             <div className="font-bold">{member?.Name || "N/A"}</div>
             <div>
               <div
@@ -94,13 +88,13 @@ const MemberTableBodyRow = ({ member, refetch }) => {
           </div>
         </div>
       </td>
-      <td>{member?.AccountNumber || "N/A"}</td>
-      <td>{member?.PhoneNumber || "N/A"}</td>
-      <td>{member?.Email || "N/A"}</td>
-      <th>{member?.CreatedByUser}</th>
-      <th>{member?.Issuer || "N/A"}</th>
-      <th>{createDate}</th>
-      <th>{issuedDate}</th>
+      <td className="p-3">{member?.AccountNumber || "N/A"}</td>
+      <td className="p-3">{member?.PhoneNumber || "N/A"}</td>
+      <td className="p-3">{member?.Email || "N/A"}</td>
+      <th className="p-3">{member?.CreatedByUser}</th>
+      <th className="p-3">{member?.Issuer || "N/A"}</th>
+      <th className="p-3 text-right">{createDate}</th>
+      <th className="p-3 text-right">{issuedDate}</th>
     </tr>
   );
 };

@@ -8,12 +8,4 @@ const formatWithTimeByDateString = (dateTime) => {
   return moment(dateTime).format("hh:mm:ss A");
 };
 
-const formatWithFromNowByDateString = (dateTime) => {
-  return moment(dateTime).startOf("hour").fromNow(true);
-};
-
-export {
-  formatWithDayMonthTimeByDateString,
-  formatWithFromNowByDateString,
-  formatWithTimeByDateString,
-};
+export { formatWithDayMonthTimeByDateString, formatWithTimeByDateString };

@@ -1,11 +1,27 @@
+import toast from "react-hot-toast";
 import { FaUsersRectangle } from "react-icons/fa6";
 import { HiQueueList } from "react-icons/hi2";
 import { IoMdPaper } from "react-icons/io";
 import { IoPeople, IoSettingsOutline } from "react-icons/io5";
+import { LiaSpinnerSolid } from "react-icons/lia";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../assets/images/bg-rm-logo.png";
+import useAuth from "../../../hooks/useAuth";
 import MenuItem from "./Menu/MenuItem";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const { isLogoutLoading, logoutUser } = useAuth();
+
+  const handleLogout = () => {
+    logoutUser()
+      .then(() => {
+        toast.success("Logout completed");
+        navigate("/login", { replace: true });
+      })
+      .catch();
+  };
+
   return (
     <div className="h-[100vh] p-3 space-y-2 w-60 bg-base-300 text-gray-100">
       <div className="flex items-center p-2 space-x-4">
@@ -34,21 +50,25 @@ const Sidebar = () => {
             address="/dashboard/settings"
             icon={IoSettingsOutline}
           />
-          <a
-            rel="noopener noreferrer"
-            href="#"
+          <button
+            onClick={handleLogout}
+            disabled={isLogoutLoading}
             className="flex items-center p-2 space-x-3 rounded-md"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-              className="w-5 h-5 fill-current text-gray-400 dark:text-gray-600"
-            >
-              <path d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z"></path>
-              <rect width="32" height="64" x="256" y="232"></rect>
-            </svg>
+            {isLogoutLoading ? (
+              <LiaSpinnerSolid className="animate-spin m-auto " />
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="w-5 h-5 fill-current text-gray-400 dark:text-gray-600"
+              >
+                <path d="M440,424V88H352V13.005L88,58.522V424H16v32h86.9L352,490.358V120h56V456h88V424ZM320,453.642,120,426.056V85.478L320,51Z"></path>
+                <rect width="32" height="64" x="256" y="232"></rect>
+              </svg>
+            )}
             <span>Logout</span>
-          </a>
+          </button>
         </div>
       </div>
     </div>
