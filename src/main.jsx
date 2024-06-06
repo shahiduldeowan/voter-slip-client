@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import AuthProvider from "./providers/AuthProvider.jsx";
+import SocketProvider from "./providers/SocketProvider.jsx";
 import router from "./routes/Routes.jsx";
 
 const queryClient = new QueryClient();
@@ -15,8 +16,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <HelmetProvider>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <RouterProvider router={router} />
-          <Toaster position="top-right" reverseOrder={false} />
+          <SocketProvider>
+            <RouterProvider router={router} />
+            <Toaster position="top-right" reverseOrder={false} />
+          </SocketProvider>
         </AuthProvider>
       </QueryClientProvider>
     </HelmetProvider>
