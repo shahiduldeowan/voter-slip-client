@@ -1,8 +1,19 @@
 import moment from "moment";
 
-const formatWithDayMonthTimeByDateString = (dateString) => {
-    return moment(dateString).format("DD MMM, hh:mm:ss A")
+const formatWithDayMonthTimeByDateString = (dateTime) => {
+  return moment(dateTime).format("DD MMM, hh:mm:ss A");
 };
 
-export { formatWithDayMonthTimeByDateString };
+const formatWithTimeByDateString = (dateTime) => {
+  return moment(dateTime).format("hh:mm:ss A");
+};
 
+const formatWithFromNowByDateString = (dateTime) => {
+  return moment(dateTime).startOf("hour").fromNow(true);
+};
+
+export {
+  formatWithDayMonthTimeByDateString,
+  formatWithFromNowByDateString,
+  formatWithTimeByDateString,
+};

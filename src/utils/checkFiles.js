@@ -11,4 +11,13 @@ const isExcelFileByType = (fileType) => {
   return allowedTypes.includes(fileType);
 };
 
-export { isExcelFileByType };
+const isZipFileByType = (fileType) => {
+  if (!fileType) {
+    return false;
+  }
+
+  const allowedTypes = ["application/zip", "application/x-zip-compressed"];
+  return allowedTypes.includes(fileType);
+};
+
+export { isExcelFileByType, isZipFileByType };

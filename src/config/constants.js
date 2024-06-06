@@ -14,6 +14,31 @@ const UPLOAD_FILES_TYPE = {
 
 const UPLOAD_FILE_KEYS = {
   MEMBERS: "members",
+  MEMBERS_IMAGE_ZIP_FILE: "members-images-zip-file",
+  FILES: "files",
 };
 
-export { UPLOAD_FILES_STATUS, UPLOAD_FILES_TYPE, UPLOAD_FILE_KEYS };
+const SLIP_STATUS = {
+  PENDING: "Pending",
+  ISSUED: "Issued",
+  INITIAL: "Initial",
+  PROCESS: "Processing",
+  DONE: "Done",
+  REJECT: "Rejected",
+};
+
+const SOCKET_EVENT_ENUM = Object.freeze({
+  CONNECTED_EVENT: "connected",
+  DISCONNECTED_EVENT: "disconnect",
+  SLIP_ISSUE_QUEUE_EVENT: "slip_issue_queue",
+  SOCKET_ERROR_EVENT: "socket_error",
+  VOTER_COUNT_EVENT: "voter_counts",
+});
+
+export {
+  SLIP_STATUS,
+  SOCKET_EVENT_ENUM,
+  UPLOAD_FILES_STATUS,
+  UPLOAD_FILES_TYPE,
+  UPLOAD_FILE_KEYS,
+};

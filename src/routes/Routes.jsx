@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "slip-issue",
+        path: "/slip-issue",
         element: (
           <PrivateRoute>
             <OperatorRoute>

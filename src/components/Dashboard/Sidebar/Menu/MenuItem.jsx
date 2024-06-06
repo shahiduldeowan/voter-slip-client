@@ -8,7 +8,7 @@ const MenuItem = ({ label, address, icon: Icon }) => {
       end
       className={({ isActive }) =>
         `${
-          isActive ? "bg-app-primary text-gray-50 dark:text-gray-900" : ""
+          isActive ? "bg-app-primary text-gray-900 font-bold" : ""
         } flex items-center p-2 space-x-3 rounded-md`
       }
     >

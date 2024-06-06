@@ -111,7 +111,7 @@ const AuthProvider = ({ children }) => {
 };
 
 AuthProvider.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.node.isRequired,
 };
 
 export default AuthProvider;
