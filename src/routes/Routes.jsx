@@ -6,8 +6,10 @@ import Login from "../pages/Login/Login";
 import Members from "../pages/Members/Members";
 import Profile from "../pages/Profile/Profile";
 import Settings from "../pages/Settings/Settings";
+import OperatorSlipIssue from "../pages/SlipIssue/OperatorSlipIssue";
 import SlipIssue from "../pages/SlipIssue/SlipIssue";
 import SlipIssueQueue from "../pages/SlipIssueQueue/SlipIssueQueue";
+import ViewerSlipIssueQueue from "../pages/SlipIssueQueue/ViewerSlipIssueQueue";
 import Users from "../pages/Users/Users";
 import AdminRoute from "./AdminRoute";
 import OperatorRoute from "./OperatorRoute";
@@ -34,21 +36,31 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
-      {
-        path: "/slip-issue",
-        element: (
-          <PrivateRoute>
-            <OperatorRoute>
-              <SlipIssue />
-            </OperatorRoute>
-          </PrivateRoute>
-        ),
-      },
     ],
   },
   {
     path: "login",
     element: <Login />,
+  },
+  {
+    path: "slip-issue-queue",
+    element: (
+      <PrivateRoute>
+        <ViewerRoute>
+          <ViewerSlipIssueQueue />
+        </ViewerRoute>
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/slip-issue",
+    element: (
+      <PrivateRoute>
+        <OperatorRoute>
+          <OperatorSlipIssue />
+        </OperatorRoute>
+      </PrivateRoute>
+    ),
   },
   {
     path: "dashboard",

@@ -23,7 +23,7 @@ const Login = () => {
         } else if (user?.RoleName === "Operator") {
           navigate("/slip-issue", { replace: true });
         } else if (user?.RoleName === "Viewer") {
-          navigate("/", { replace: true });
+          navigate("/slip-issue-queue", { replace: true });
         }
       })
       .catch(() => {
