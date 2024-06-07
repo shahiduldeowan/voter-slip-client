@@ -1,71 +1,48 @@
+import toast from "react-hot-toast";
+import LoadingSpinner from "../../components/Shared/LoadingSpinner";
+import { API_ENDPOINT } from "../../config/api";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useFetchData from "../../hooks/useFetchData";
+import { formatWithDayMonthTimeByDateString } from "../../utils/dateTimeFormat";
+
 const Settings = () => {
+  const {
+    data: counters,
+    isLoading,
+    refetch,
+  } = useFetchData({
+    queryKey: "counters",
+    endpoint: API_ENDPOINT.COUNTER,
+  });
+
+  const axiosSecure = useAxiosSecure();
+
   const handleCounterSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const StartSerial = parseInt(formData.get("startSerial"));
     const EndSerial = parseInt(formData.get("endSerial"));
-    const Counter = parseInt(formData.get("counterNumber"));
+    const Counter = formData.get("counterNumber");
 
     const voterCounter = { StartSerial, EndSerial, Counter };
-    console.log(voterCounter);
+
+    axiosSecure
+      .post(API_ENDPOINT.COUNTER, voterCounter)
+      .then(() => {
+        toast.success("Counter created successfully!");
+        refetch();
+        e.target.reset();
+      })
+      .catch(() => toast.error("Counter creation failed!"));
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
   return (
-    <div className="w-full h-full">
-      {/* <div className="flex">
-        <div>
-          <div className="flex items-center -mx-4 overflow-x-auto overflow-y-hidden sm:justify-center flex-nowrap dark:bg-gray-100 dark:text-gray-800">
-            <a
-              rel="noopener noreferrer"
-              href="#"
-              className="flex items-center flex-shrink-0 px-5 py-3 space-x-2 border border-b-0 rounded-t-lg dark:border-gray-600 dark:text-gray-600"
-            >
-              <MdOutlineCountertops />
-              <span>Counter</span>
-            </a>
-            <a
-              rel="noopener noreferrer"
-              href="#"
-              className="flex items-center flex-shrink-0 px-5 py-3 space-x-2 border-b dark:border-gray-600 dark:text-gray-900"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-4 h-4"
-              >
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
-              </svg>
-              <span>Role</span>
-            </a>
-            <a
-              rel="noopener noreferrer"
-              href="#"
-              className="flex items-center flex-shrink-0 px-5 py-3 space-x-2 border-b dark:border-gray-600 dark:text-gray-600"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-4 h-4"
-              >
-                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-              </svg>
-              <span>Queue</span>
-            </a>
-          </div>
-        </div>
-        <div className="border-b dark:border-gray-600 flex-1"></div>
-      </div> */}
-      <div className=" flex bg-base-300">
+    <div className="w-full h-full flex flex-col">
+      <div className=" flex bg-base-300 mb-6">
         <section className="p-6 dark:bg-gray-100 dark:text-gray-900">
           <form
             onSubmit={handleCounterSubmit}
@@ -111,7 +88,7 @@ const Settings = () => {
                   </label>
                   <br />
                   <input
-                    type="number"
+                    type="text"
                     name="counterNumber"
                     placeholder="Type here counter number"
                     className="input input-bordered w-full max-w-xs mt-1"
@@ -130,6 +107,45 @@ const Settings = () => {
             </fieldset>
           </form>
         </section>
+      </div>
+      <div className="flex-1 bg-base-200 shadow rounded-2xl p-4 max-h-[65vh]">
+        <div className="h-full  flex flex-col">
+          <div className="flex-grow overflow-auto">
+            <div className="table-wrapper relative">
+              <table className=" table">
+                <thead className="dark:bg-gray-300 sticky top-0 z-10 bg-base-200">
+                  <tr className="text-left text-xl">
+                    <th>Counter</th>
+                    <th>Start Serial</th>
+                    <th>End Serial</th>
+                    <th>Created By</th>
+                    <th>Created Date</th>
+                  </tr>
+                </thead>
+                <tbody className="max-h-full overflow-y-auto">
+                  {counters &&
+                    counters.length > 0 &&
+                    counters.map((counter, index) => {
+                      const createDate = counter?.CreatedAt
+                        ? formatWithDayMonthTimeByDateString(counter?.CreatedAt)
+                        : "?";
+                      return (
+                        <tr key={index}>
+                          <td className="p-3">{counter?.Counter || "N/A"}</td>
+                          <td className="p-3">
+                            {counter?.StartSerial || "N/A"}
+                          </td>
+                          <td className="p-3">{counter?.EndSerial || "N/A"}</td>
+                          <td className="p-3">{counter?.Username || "N/A"}</td>
+                          <th className="p-3">{createDate}</th>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

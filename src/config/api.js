@@ -13,6 +13,7 @@ const API_ENDPOINT = {
   VOTER_COUNT: "/api/v1/voter/count",
   VOTER_SLIP_RESET: "/api/v1/slip/reset",
   ROLES: "/api/v1/role",
+  COUNTER: "/api/v1/counter",
 };
 
 export { API_ENDPOINT };
